@@ -15,7 +15,7 @@ const CREATE_USERS_TABLE = `
     );`;
 
 export const initDatabase = async () => {
-  await MySqlPool.execute(CREATE_DATABASE);
+  // await MySqlPool.execute(CREATE_DATABASE); /* Prodution Server has already a database. */
   await MySqlPool.execute(CREATE_USERS_TABLE);
 
   console.log("MySQL database initialized successfully.");
