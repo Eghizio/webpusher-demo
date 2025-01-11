@@ -1,0 +1,33 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "dotenvx run -- node ./dist/index.js",
+    "dev": "dotenvx run -- tsx ./src/index.ts",
+    "docker:phpmyadmin:run": "docker run --name=phpmyadmin-webpushdemo -d -p 8080:80 -e PMA_ARBITRARY=1 phpmyadmin",
+    "docker:phpmyadmin:start": "docker start phpmyadmin-webpushdemo",
+    "docker:phpmyadmin:stop": "docker stop phpmyadmin-webpushdemo",
+    "docker:mysql:run": "docker run --name=mysql-webpushdemo -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mysql mysql",
+    "docker:mysql:start": "docker start mysql-webpushdemo",
+    "docker:mysql:stop": "docker stop mysql-webpushdemo"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.32.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^3.12.0",
+    "web-push": "^3.6.7"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.10.5",
+    "@types/web-push": "^3.6.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

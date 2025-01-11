@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon" />
+    <title>Webpusher</title>
+    <script type="module" src="./main.js"></script>
+  </head>
+  <body>
+    <h1>Webpusher</h1>
+
+    <form id="subscribe">
+      <button type="submit" style="color: green">Subscribe ✅</button>
+    </form>
+    <form id="unsubscribe">
+      <button type="submit" style="color: red">Unubscribe ❌</button>
+    </form>
+
+    <form id="broadcast">
+      <input type="text" id="message" placeholder="Message" />
+      <button type="submit">Broadcast</button>
+    </form>
+
+    <section>
+      <ol id="users"></ol>
+    </section>
+  </body>
+</html>

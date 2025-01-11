@@ -1,0 +1,2 @@
+export const publicVapidKey =
+  "BAneqYP7oVG-SemwrbWbu1JLEmldZkVPkYJjzX3yIZ2qY8BQS1tEfCE2JpaGR9FGFJ7dPN64xwuoOIPcbY0NEe4";
