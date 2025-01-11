@@ -12,7 +12,7 @@ webpush.setVapidDetails(
 export const WebPush = {
   async send(subscription: WebPushSubscription, payload: any) {
     try {
-      return webpush.sendNotification(subscription, payload);
+      return await webpush.sendNotification(subscription, payload);
     } catch (error) {
       const data = JSON.stringify(payload, null, 2);
       const sub = JSON.stringify(subscription, null, 2);
