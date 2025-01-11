@@ -11,6 +11,16 @@ webpush.setVapidDetails(
 
 export const WebPush = {
   async send(subscription: WebPushSubscription, payload: any) {
-    return webpush.sendNotification(subscription, payload);
+    try {
+      return webpush.sendNotification(subscription, payload);
+    } catch (error) {
+      const data = JSON.stringify(payload, null, 2);
+      const sub = JSON.stringify(subscription, null, 2);
+
+      console.error(
+        `Failed to send notification with payload: ${data} for subscription: ${sub}`,
+        error
+      );
+    }
   },
 };
