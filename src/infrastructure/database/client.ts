@@ -6,7 +6,7 @@ export const MySqlPool = mysql.createPool(config.database);
 const CREATE_DATABASE = `CREATE DATABASE IF NOT EXISTS webpushdemo;`;
 
 const CREATE_USERS_TABLE = `
-    CREATE TABLE IF NOT EXISTS users (
+    CREATE TABLE IF NOT EXISTS webpush_users (
         id            VARCHAR(36)                               PRIMARY KEY,
         username      VARCHAR(255)                              NOT NULL,
         subscription  TEXT                                      NULL,

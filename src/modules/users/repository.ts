@@ -1,11 +1,11 @@
 import { MySqlPool } from "../../infrastructure/database/client.js";
 import type { UserEntity, WebPushSubscription } from "../../models.js";
 
-const INSERT_USER = `INSERT INTO users (id, username, subscription, user_agent) VALUES (?,?,?,?)`;
-const UPDATE_USER_SUBSCRIPTION = `UPDATE users SET subscription = ? WHERE id = ?`;
-const SELECT_USERS = `SELECT * FROM users`;
-const SELECT_SUBSCRIBED_USERS = `SELECT * FROM users WHERE subscription IS NOT NULL`;
-const SELECT_USER = `SELECT * FROM users WHERE id = ?`;
+const INSERT_USER = `INSERT INTO webpush_users (id, username, subscription, user_agent) VALUES (?,?,?,?)`;
+const UPDATE_USER_SUBSCRIPTION = `UPDATE webpush_users SET subscription = ? WHERE id = ?`;
+const SELECT_USERS = `SELECT * FROM webpush_users`;
+const SELECT_SUBSCRIBED_USERS = `SELECT * FROM webpush_users WHERE subscription IS NOT NULL`;
+const SELECT_USER = `SELECT * FROM webpush_users WHERE id = ?`;
 
 export const registerGuestUser = async (
   username: string,
