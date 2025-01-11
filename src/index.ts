@@ -1,11 +1,11 @@
 import { createServer } from "./server.js";
 import { type Config, config } from "./Config.js";
-import { initTables } from "./infrastructure/database/client.js";
+import { initDatabase } from "./infrastructure/database/client.js";
 
 const bootstrap = async ({ port, secrets: { cookies } }: Config) => {
   // init db.
   // temp
-  await initTables();
+  await initDatabase();
 
   const server = createServer(cookies);
 
