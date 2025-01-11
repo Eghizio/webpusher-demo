@@ -15,6 +15,7 @@ export class Config {
     readonly cookies: string;
     readonly vapidKeyPublic: string;
     readonly vapidKeyPrivate: string;
+    readonly vapidSubject: string;
   };
 
   constructor() {
@@ -35,6 +36,7 @@ export class Config {
       cookies: this.readEnv("COOKIE_SECRET"),
       vapidKeyPublic: this.readEnv("VAPID_KEY_PUBLIC"),
       vapidKeyPrivate: this.readEnv("VAPID_KEY_PRIVATE"),
+      vapidSubject: this.readEnv("VAPID_SUBJECT"),
     };
 
     this.logSafeConfig();
