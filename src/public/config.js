@@ -10,7 +10,8 @@ const getKey = (hostname) => {
 
   if (isProd) return prodKey;
   if (isDev) return devKey;
-  throw new Error(`Unknown hostname: ${hostname}`);
+  // throw new Error(`Unknown hostname: ${hostname}`);
+  return devKey;
 };
 
 export const publicVapidKey = getKey(location.hostname);
