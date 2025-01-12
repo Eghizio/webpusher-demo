@@ -21,7 +21,8 @@ export const setUserSubscription = async (
   id: string,
   subscription: WebPushSubscription | null
 ): Promise<WebPushSubscription | null> => {
-  const values = [JSON.stringify(subscription), id];
+  const sub = subscription ? JSON.stringify(subscription) : null;
+  const values = [sub, id];
   await MySqlPool.execute(UPDATE_USER_SUBSCRIPTION, values);
   return subscription;
 };
