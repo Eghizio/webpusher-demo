@@ -3,6 +3,7 @@ import { publicVapidKey } from "../config.js";
 if (!("serviceWorker" in navigator))
   throw new Error("Service Worker not supported.");
 
+// https://stackoverflow.com/a/79059165
 if (!("PushManager" in window)) throw new Error("Push not supported.");
 
 export const registerServiceWorker = async () => {
