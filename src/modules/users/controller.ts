@@ -62,11 +62,8 @@ const toDto = (user: UserEntity): UserDto => ({
 
 export const getAllUsers = async (req: Request, res: Response) => {
   const allUsers = await UsersRepository.getAllUsers();
-  console.log("Retrieved users.");
 
   const users = allUsers.map(toDto);
-
-  console.log(users);
 
   res.json(users);
 };

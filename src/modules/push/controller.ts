@@ -15,7 +15,7 @@ export const subscribe = async (req: Request, res: Response) => {
 };
 
 export const unsubscribe = async (req: Request, res: Response) => {
-  const subscription = req.body.subscription;
+  // const subscription = req.body.subscription;
   const id = req.cookies["u"];
 
   // console.log({ id });
