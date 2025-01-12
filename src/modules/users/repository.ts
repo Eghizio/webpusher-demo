@@ -31,9 +31,9 @@ const parseSubscription = (subscription: any) => {
   if (!subscription) return null;
 
   try {
-    console.log("Parsed sub: ", typeof subscription, { subscription });
     return JSON.parse(subscription);
   } catch (error) {
+    console.error("Failed to parse subscription:", subscription, error);
     return null;
   }
 };

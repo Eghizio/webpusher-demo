@@ -4,20 +4,24 @@ import { renderUsers } from "./js/render.js";
 
 const refreshUsersList = () => Api.getUsers().then(renderUsers);
 
-await Api.registerGuestUser().then(() => console.log("Registered")); // what if already registered.
+const init = async () => {
+  await Api.registerGuestUser().then(() => console.log("Registered")); // what if already registered.
 
-await WebPush.registerServiceWorker().then(() =>
-  console.log("Service Worker registered.")
-);
+  await WebPush.registerServiceWorker().then(() =>
+    console.log("Service Worker registered.")
+  );
 
-WebPush.getCurrentSubscription().then((sub) => {
-  console.log(sub);
-  console.log(JSON.stringify(sub));
-});
+  WebPush.getCurrentSubscription().then((sub) => {
+    console.log(sub);
+    console.log(JSON.stringify(sub));
+  });
 
-WebPush.subscribe().then(Api.subscribe).then(refreshUsersList);
+  WebPush.subscribe().then(Api.subscribe).then(refreshUsersList);
 
-refreshUsersList();
+  refreshUsersList();
+};
+
+init();
 
 document
   .querySelector("form#broadcast")
@@ -48,6 +52,7 @@ document
 
     console.log(`Unsubscribing...`);
     const subscription = await WebPush.getCurrentSubscription();
+    console.log("Unsubscribing subscription:", { subscription });
     await WebPush.unsubscribe().then(() => Api.unsubscribe(subscription));
     refreshUsersList();
   });

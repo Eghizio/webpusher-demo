@@ -3,11 +3,11 @@ import { WebPush } from "../../lib/webpush.js";
 import type { WebPushSubscription } from "../../models.js";
 import * as UsersRepository from "../users/repository.js";
 
+// Todo: Error handling xd.
+// Todo: Logger. To Console + File. Morgan + ApplicationLogger.
 export const subscribe = async (req: Request, res: Response) => {
   const subscription = req.body.subscription ?? null;
   const id = req.cookies["u"];
-
-  // console.log({ id });
 
   const sub = await UsersRepository.setUserSubscription(id, subscription);
 
@@ -15,10 +15,7 @@ export const subscribe = async (req: Request, res: Response) => {
 };
 
 export const unsubscribe = async (req: Request, res: Response) => {
-  // const subscription = req.body.subscription;
   const id = req.cookies["u"];
-
-  // console.log({ id });
 
   await UsersRepository.setUserSubscription(id, null);
 
@@ -28,12 +25,10 @@ export const unsubscribe = async (req: Request, res: Response) => {
 export const broadcast = async (req: Request, res: Response) => {
   const message = req.body.message;
   const id = req.cookies["u"];
-  // console.log({ id });
 
   const payload = JSON.stringify({ title: message });
 
   const subs = await UsersRepository.getAllSubscribedUsers();
-  // console.log({ subs });
 
   const pushes = subs.map(({ subscription }) => {
     return subscription
