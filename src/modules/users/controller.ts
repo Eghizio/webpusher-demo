@@ -61,17 +61,14 @@ const toDto = (user: UserEntity): UserDto => ({
 });
 
 export const getAllUsers = async (req: Request, res: Response) => {
-  try {
-    const allUsers = await UsersRepository.getAllUsers();
-    console.log("Retrieved users.");
+  const allUsers = await UsersRepository.getAllUsers();
+  console.log("Retrieved users.");
 
-    const users = allUsers.map(toDto);
+  const users = allUsers.map(toDto);
 
-    res.json(users);
-  } catch (error) {
-    console.error("Error retrieving users:", error);
-    res.status(500).send("Error retrieving users.");
-  }
+  console.log(users);
+
+  res.json(users);
 };
 
 export const getAllSubscribedUsers = async (req: Request, res: Response) => {
