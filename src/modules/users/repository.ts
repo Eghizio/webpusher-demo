@@ -26,10 +26,18 @@ export const setUserSubscription = async (
   return subscription;
 };
 
+const parseSubscription = (subscription: any) => {
+  try {
+    return JSON.parse(subscription);
+  } catch (error) {
+    return null;
+  }
+};
+
 const toUserEntity = (row: any): UserEntity => ({
   id: row.id,
   username: row.username,
-  subscription: JSON.parse(row.subscription),
+  subscription: parseSubscription(row.subscription),
   user_agent: row.user_agent,
   created_at: row.created_at,
 });
