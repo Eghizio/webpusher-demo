@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { WebPush } from "../../lib/webpush.js";
-import { WebPushSubscription } from "../../models.js";
+import type { WebPushSubscription } from "../../models.js";
 import * as UsersRepository from "../users/repository.js";
 
 export const subscribe = async (req: Request, res: Response) => {
-  const subscription = req.body ?? null;
+  const subscription = req.body.subscription ?? null;
   const id = req.cookies["u"];
 
   // console.log({ id });
@@ -15,7 +15,7 @@ export const subscribe = async (req: Request, res: Response) => {
 };
 
 export const unsubscribe = async (req: Request, res: Response) => {
-  const subscription = req.body;
+  const subscription = req.body.subscription;
   const id = req.cookies["u"];
 
   // console.log({ id });
