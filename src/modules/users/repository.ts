@@ -44,6 +44,7 @@ const toUserEntity = (row: any): UserEntity => ({
 
 export const getAllUsers = async (): Promise<UserEntity[]> => {
   const [rows] = await MySqlPool.execute(SELECT_USERS);
+  console.log("Mapping users...");
 
   //@ts-ignore
   return Array.from(rows).map(toUserEntity);
