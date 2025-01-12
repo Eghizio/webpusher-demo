@@ -28,6 +28,7 @@ export const setUserSubscription = async (
 
 const parseSubscription = (subscription: any) => {
   try {
+    console.log("Parsed sub: ", typeof subscription, { subscription });
     return JSON.parse(subscription);
   } catch (error) {
     return null;
