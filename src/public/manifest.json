@@ -1,6 +1,6 @@
 {
-  "short_name": "webpusherdemo",
-  "name": "Webpusher - Demo",
+  "short_name": "Web Push Demo",
+  "name": "Web Push Demo",
   "icons": [
     {
       "src": "/assets/favicon.png",
@@ -18,8 +18,10 @@
       "sizes": "512x512"
     }
   ],
+  "scope": "/",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#F4F4F4",
+  "orientation": "any",
+  "theme_color": "#317EFB",
   "background_color": "#363636"
 }
