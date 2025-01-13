@@ -5,7 +5,7 @@ import cors from "cors";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import { apiRouter } from "./api.js";
-import type { Config } from "./Config.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -19,6 +19,8 @@ export const createServer = (cookieSecret: string) => {
   app.use(express.static(join(__dirname, "public")));
 
   app.use("/api/v1", apiRouter);
+
+  app.use(errorHandler);
 
   return app;
 };

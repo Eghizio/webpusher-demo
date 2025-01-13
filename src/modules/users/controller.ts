@@ -29,8 +29,10 @@ export const registerGuestUser = async (req: Request, res: Response) => {
     const user = await UsersRepository.getUserById(id);
 
     if (user) {
-      // Already registered.
+      // Already registered. Throw an error?
+
       if (user.subscription) {
+        // Todo: Change Welcome Back message to middleware on `/` entry.
         const payload = JSON.stringify({
           title: `Welcome back ${user.username} 😊`,
         });

@@ -18,7 +18,7 @@ export const WebPush = {
       const sub = JSON.stringify(subscription, null, 2);
 
       console.error(
-        `Failed to send notification with payload: ${data} for subscription: ${sub}`,
+        `Failed to send WebPush with payload: ${data} for subscription: ${sub}`,
         error
       );
     }
