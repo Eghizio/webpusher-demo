@@ -1,14 +1,13 @@
 import type { IncomingMessage, ServerResponse } from "node:http";
-import morgan, { type TokenIndexer } from "morgan";
-// import type { Request, Response } from "express";
+import morgan from "morgan";
 import colors from "colors";
 import { config, Environment } from "../Config.js";
 
 type MorganFormatFn = <Req extends IncomingMessage, Res extends ServerResponse>(
-  tokens: TokenIndexer<Req, Res>,
-  req: Req,
-  res: Res
-) => string | undefined | null;
+  request: Req,
+  response: Res,
+  callback: (error?: Error) => void
+) => void;
 
 // Todo: Setup Dual logs -> Console -> Rotating File (1d interval + compression 7d).
 const colorStatus = (status: number) => {
@@ -21,10 +20,11 @@ const colorStatus = (status: number) => {
 };
 
 const logFormat: Record<Environment, MorganFormatFn> = {
-  production: () =>
-    ":date[iso] :method :url :status :response-time ms - :res[content-length]",
+  production: morgan(
+    ":date[iso] :method :url :status :response-time ms - :res[content-length]"
+  ),
 
-  development: (tokens, req, res) => {
+  development: morgan((tokens, req, res) => {
     const date = tokens["date"](req, res) ?? new Date();
     const method = tokens["method"](req, res) ?? req.method;
     const url = tokens["url"](req, res) ?? req.url;
@@ -34,17 +34,18 @@ const logFormat: Record<Environment, MorganFormatFn> = {
     const log = [
       date ? new Date(date).toISOString() : null,
       method ? colors.magenta(method) : null,
-      url ? colors.cyan(url) : null,
+      url ? colors.underline(url) : null,
       status ? colorStatus(status) : null,
     ]
       .filter(Boolean)
       .join(" ");
 
     return log;
-  },
+  }),
 
-  test: () =>
-    ":date[iso] :method :url :status :response-time ms - :res[content-length]",
+  test: morgan(
+    ":date[iso] :method :url :status :response-time ms - :res[content-length]"
+  ),
 } as const;
 
-export const morganLogger = morgan(logFormat[config.environment]);
+export const morganLogger = logFormat[config.environment];
