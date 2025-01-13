@@ -2,9 +2,8 @@ import webpush from "web-push";
 import { config } from "../Config.js";
 import { WebPushSubscription } from "../models.js";
 
-// Pass webpush as client to constructor. Setup Vapid Details in constructor.
 webpush.setVapidDetails(
-  `mailto:${config.secrets.vapidSubject}`,
+  config.secrets.vapidSubject,
   config.secrets.vapidKeyPublic,
   config.secrets.vapidKeyPrivate
 );
