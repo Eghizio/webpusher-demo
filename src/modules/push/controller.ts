@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { WebPush } from "../../lib/webpush.js";
-import type { WebPushSubscription } from "../../models.js";
 import * as UsersRepository from "../users/repository.js";
 
 // Todo: Error handling xd.
 // Todo: Logger. To Console + File. Morgan + ApplicationLogger.
+
+// Todo: Welcome Push message.
 export const subscribe = async (req: Request, res: Response) => {
   const subscription = req.body.subscription ?? null;
   const id = req.cookies["u"];
@@ -22,6 +23,10 @@ export const unsubscribe = async (req: Request, res: Response) => {
   res.sendStatus(204);
 };
 
+// Todo: /push/broadcast/:userId?message=or_payload_in_body
+// Send directly to user.
+// Middleware for protecting endpoints via API_KEY. Singular Admin Key?
+// (Generating multiple API keys? + Application Cache?)
 export const broadcast = async (req: Request, res: Response) => {
   const message = req.body.message;
   const id = req.cookies["u"];
