@@ -35,13 +35,12 @@ const colorStatus = (status: number) => {
   return statusCode;
 };
 
-const loggers: LoggerResolver = {
-  production: (options) =>
-    morgan(
-      ":date[iso] :method :url :status :response-time ms - :res[content-length]",
-      options
-    ),
+const logFormat =
+  ":date[iso] :method :status :url :response-time ms - :res[content-length]";
 
+const loggers: LoggerResolver = {
+  production: (options) => morgan(logFormat, options),
+  test: (options) => morgan(logFormat, options),
   development: (options) =>
     morgan((tokens, req, res) => {
       const date = tokens["date"](req, res) ?? new Date();
@@ -53,20 +52,14 @@ const loggers: LoggerResolver = {
       const log = [
         date ? new Date(date).toISOString() : null,
         method ? colors.magenta(method) : null,
-        url ? colors.underline(url) : null,
         status ? colorStatus(status) : null,
+        url ? colors.underline(url) : null,
       ]
         .filter(Boolean)
         .join(" ");
 
       return log;
     }, options),
-
-  test: (options) =>
-    morgan(
-      ":date[iso] :method :url :status :response-time ms - :res[content-length]",
-      options
-    ),
 } as const;
 
 const logsDir = join(__dirname, "..", "..", "logs");

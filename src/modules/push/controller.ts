@@ -7,10 +7,15 @@ import * as UsersRepository from "../users/repository.js";
 
 // Todo: Welcome Push message.
 export const subscribe = async (req: Request, res: Response) => {
-  const subscription = req.body.subscription ?? null;
+  const subscription = req.body.subscription ?? null; // Todo: Validate.
   const id = req.cookies["u"];
 
   const sub = await UsersRepository.setUserSubscription(id, subscription);
+
+  if (sub) {
+    const payload = JSON.stringify({ title: `Hello there 👋` });
+    WebPush.send(sub, payload);
+  }
 
   res.sendStatus(201);
 };
