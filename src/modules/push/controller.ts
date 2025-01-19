@@ -5,7 +5,7 @@ import * as UsersRepository from "../users/repository.js";
 // Todo: Error handling xd.
 // Todo: Logger. To Console + File. Morgan + ApplicationLogger.
 
-// Todo: Welcome Push message.
+// Todo: Welcome Push message. -> Move to PushService.
 export const subscribe = async (req: Request, res: Response) => {
   const subscription = req.body.subscription ?? null; // Todo: Validate.
   const id = req.cookies["u"];
@@ -47,6 +47,24 @@ export const broadcast = async (req: Request, res: Response) => {
   });
 
   // console.log(await Promise.all(pushes));
+
+  res.sendStatus(200);
+};
+
+export const broadcastToUser = async (req: Request, res: Response) => {
+  const message = req.body.message;
+  const userId = req.params.userId; // by id. Maybe also by name?
+
+  const user = await UsersRepository.getUserById(userId);
+
+  if (!user || !user.subscription) {
+    res.sendStatus(400);
+    return;
+  }
+
+  const payload = JSON.stringify({ title: message });
+
+  WebPush.send(user.subscription, payload);
 
   res.sendStatus(200);
 };

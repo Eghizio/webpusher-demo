@@ -5,7 +5,9 @@ export const Api = {
   unsubscribe: (subscription) =>
     Http.post("/push/unsubscribe", { subscription }),
   broadcast: (message) => Http.post("/push/broadcast", { message }),
+  broadcastToUser: (userId, message) =>
+    Http.post(`/push/broadcast/${userId}`, { message }),
 
-  registerGuestUser: () => Http.get("/users/register"),
+  registerUser: (username) => Http.post("/users/register", { username }),
   getUsers: () => Http.get("/users/all"),
 };

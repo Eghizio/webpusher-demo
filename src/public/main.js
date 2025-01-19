@@ -6,7 +6,7 @@ console.log({ renderUsers });
 const refreshUsersList = () => Api.getUsers().then(renderUsers);
 
 const init = async () => {
-  await Api.registerGuestUser().then(() => console.log("Registered")); // what if already registered.
+  await Api.registerUser("Guest").then(() => console.log("Registered")); // what if already registered.
 
   await WebPush.registerServiceWorker().then(() =>
     console.log("Service Worker registered.")

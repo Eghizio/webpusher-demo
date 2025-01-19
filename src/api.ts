@@ -11,7 +11,8 @@ apiRouter.get("/ping", (req, res) => {
 apiRouter.post("/push/subscribe", WebPushController.subscribe);
 apiRouter.post("/push/unsubscribe", WebPushController.unsubscribe);
 apiRouter.post("/push/broadcast", WebPushController.broadcast);
+apiRouter.post("/push/broadcast/:userId", WebPushController.broadcastToUser);
 
-apiRouter.get("/users/register", UsersController.registerGuestUser);
+apiRouter.post("/users/register", UsersController.registerGuestUser);
 apiRouter.get("/users/all", UsersController.getAllUsers);
 apiRouter.get("/users/subscribed", UsersController.getAllSubscribedUsers);
