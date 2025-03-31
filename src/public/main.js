@@ -2,7 +2,6 @@ import { Api } from "./js/api.js";
 import * as WebPush from "./js/webpush.js";
 import { renderUsers } from "./js/render.js";
 
-console.log({ renderUsers });
 const refreshUsersList = () => Api.getUsers().then(renderUsers);
 
 const init = async () => {

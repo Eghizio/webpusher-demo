@@ -1,4 +1,9 @@
-import { HttpClient as Http } from "./httpclient.js";
+import { HttpClient } from "./httpclient.js";
+
+const API_URL = "/api/v1"; // "http://localhost:3000/api/v1"
+const headers = { "Content-Type": "application/json" };
+
+export const Http = new HttpClient(API_URL, headers);
 
 export const Api = {
   subscribe: (subscription) => Http.post("/push/subscribe", { subscription }),
