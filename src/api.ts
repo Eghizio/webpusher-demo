@@ -13,6 +13,8 @@ apiRouter.post("/push/unsubscribe", WebPushController.unsubscribe);
 apiRouter.post("/push/broadcast", WebPushController.broadcast);
 apiRouter.post("/push/broadcast/:userId", WebPushController.broadcastToUser);
 
-apiRouter.post("/users/register", UsersController.registerGuestUser);
+apiRouter.post("/users/register", UsersController.registerUser);
 apiRouter.get("/users/all", UsersController.getAllUsers);
 apiRouter.get("/users/subscribed", UsersController.getAllSubscribedUsers);
+
+apiRouter.get("/users/me", UsersController.getCurrentUserTemp);

@@ -8,8 +8,9 @@ import * as UsersRepository from "../users/repository.js";
 // Todo: Welcome Push message. -> Move to PushService.
 export const subscribe = async (req: Request, res: Response) => {
   const subscription = req.body.subscription ?? null; // Todo: Validate.
-  const id = req.cookies["u"];
+  const id = req.signedCookies["u"];
 
+  // Handle already subscribed users. Compare subs if it is new subscription.
   const sub = await UsersRepository.setUserSubscription(id, subscription);
 
   if (sub) {
@@ -21,7 +22,7 @@ export const subscribe = async (req: Request, res: Response) => {
 };
 
 export const unsubscribe = async (req: Request, res: Response) => {
-  const id = req.cookies["u"];
+  const id = req.signedCookies["u"];
 
   await UsersRepository.setUserSubscription(id, null);
 
@@ -34,7 +35,7 @@ export const unsubscribe = async (req: Request, res: Response) => {
 // (Generating multiple API keys? + Application Cache?)
 export const broadcast = async (req: Request, res: Response) => {
   const message = req.body.message;
-  const id = req.cookies["u"];
+  const id = req.signedCookies["u"];
 
   const payload = JSON.stringify({ title: message });
 
