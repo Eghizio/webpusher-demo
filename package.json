@@ -1,4 +1,5 @@
 {
+  "name": "webpusher-server",
   "type": "module",
   "scripts": {
     "build": "tsc",
@@ -20,7 +21,8 @@
     "file-stream-rotator": "^1.0.0",
     "morgan": "^1.10.0",
     "mysql2": "^3.12.0",
-    "web-push": "^3.6.7"
+    "web-push": "^3.6.7",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
