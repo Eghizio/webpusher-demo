@@ -2,6 +2,7 @@ import { CookieOptions, Request, Response } from "express";
 import * as UsersRepository from "./repository.js";
 import { WebPush } from "../../lib/webpush.js";
 import type { UserDto, UserEntity } from "../../models.js";
+import { UAParser as UserAgentParser } from "ua-parser-js";
 
 // Cookie expiration.
 const YEAR = 365 * 24 * 60 * 60 * 1_000; // Milliseconds.
@@ -50,7 +51,11 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 
   const username = req.body.username;
-  const userAgent = toUserAgent(req.headers["user-agent"]);
+  const userAgent = toUserAgent(req.headers["user-agent"]); // Todo: Probably can be replaced by UserAgentParser("...").ua;
+
+  const ua_data = UserAgentParser(req.headers["user-agent"]);
+  // Todo: Get device & OS information. Some dashboard for summary?.
+  console.log({ ua_data });
 
   const generatedId = await UsersRepository.registerGuestUser(
     username,
