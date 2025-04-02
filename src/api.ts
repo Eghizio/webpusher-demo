@@ -15,12 +15,9 @@ apiRouter.post("/push/broadcast", WebPushController.broadcast);
 apiRouter.post("/push/broadcast/:userId", WebPushController.broadcastToUser);
 
 apiRouter.post("/users/register", UsersController.registerUser);
-apiRouter.get("/users/me", UsersController.getCurrentUser); // Todo: Rename temp.
+apiRouter.get("/users/me", UsersController.getCurrentUser);
 
 apiRouter.get("/users/all", UsersController.getAllUsers);
 apiRouter.get("/users/subscribed", UsersController.getAllSubscribedUsers);
 
-// Features
 apiRouter.post("/pokes/:userId", PokeController.pokeUser);
-
-// Todo: Assign user an Avatar based on the id hash/modulo.
