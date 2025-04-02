@@ -1,20 +1,9 @@
-import { CookieOptions, Request, Response } from "express";
+import type { Request, Response } from "express";
 import * as UsersRepository from "./repository.js";
 import { WebPush } from "../../lib/webpush.js";
+import { UserCookie } from "../../lib/auth.js";
 import type { UserDto, UserEntity } from "../../models.js";
-import { UAParser as UserAgentParser } from "ua-parser-js";
-
-// Cookie expiration.
-const YEAR = 365 * 24 * 60 * 60 * 1_000; // Milliseconds.
-
-const COOKIE_OPTIONS: CookieOptions = {
-  httpOnly: true,
-  // sameSite: "strict",
-  sameSite: "lax",
-  maxAge: YEAR,
-  signed: true,
-  //   secure: config.environment === "production",
-} as const;
+// import { UAParser as UserAgentParser } from "ua-parser-js";
 
 const toUserAgent = (ua: string | string[] | undefined): string | null => {
   return Array.isArray(ua) ? ua.toString() : ua || null;
@@ -27,9 +16,7 @@ const toUserDto = (id: string, username: string) => ({
 });
 
 export const registerUser = async (req: Request, res: Response) => {
-  // const id: string | null = req.cookies["u"] ?? null;
-  const id: string | null = req.signedCookies["u"] ?? null;
-  console.log({ id });
+  const id = UserCookie.getUserId(req);
 
   if (id) {
     const user = await UsersRepository.getUserById(id);
@@ -50,26 +37,23 @@ export const registerUser = async (req: Request, res: Response) => {
     }
   }
 
-  const username = req.body.username;
-  const userAgent = toUserAgent(req.headers["user-agent"]); // Todo: Probably can be replaced by UserAgentParser("...").ua;
+  // // Todo: Get device & OS information. Some dashboard for summary?.
+  // console.log(UserAgentParser(req.headers["user-agent"]).ua);
 
-  const ua_data = UserAgentParser(req.headers["user-agent"]);
-  // Todo: Get device & OS information. Some dashboard for summary?.
-  console.log({ ua_data });
+  const username = req.body.username;
+  const userAgent = toUserAgent(req.headers["user-agent"]);
 
   const generatedId = await UsersRepository.registerGuestUser(
     username,
     userAgent
   );
 
-  res.cookie("u", generatedId, COOKIE_OPTIONS);
+  UserCookie.setUserId(res, generatedId);
   res.status(201).json(toUserDto(generatedId, username));
 };
 
-// Todo: get current user?
-export const getCurrentUserTemp = async (req: Request, res: Response) => {
-  console.log(req.signedCookies);
-  const id: string | null = req.signedCookies["u"] ?? null;
+export const getCurrentUser = async (req: Request, res: Response) => {
+  const id = UserCookie.getUserId(req);
 
   if (!id) {
     res.sendStatus(401);
@@ -81,6 +65,13 @@ export const getCurrentUserTemp = async (req: Request, res: Response) => {
   if (!user) {
     res.sendStatus(404);
     return;
+  }
+
+  if (user.subscription) {
+    const payload = JSON.stringify({
+      title: `Welcome back ${user.username} 😊`,
+    });
+    WebPush.send(user.subscription, payload);
   }
 
   res.json(toUserDto(user.id, user.username));
