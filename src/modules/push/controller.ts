@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { WebPush } from "../../lib/webpush.js";
 import * as UsersRepository from "../users/repository.js";
+import { UserCookie } from "../../lib/auth.js";
 
 // Todo: Error handling xd.
 // Todo: Logger. To Console + File. Morgan + ApplicationLogger.
@@ -8,7 +9,12 @@ import * as UsersRepository from "../users/repository.js";
 // Todo: Welcome Push message. -> Move to PushService.
 export const subscribe = async (req: Request, res: Response) => {
   const subscription = req.body.subscription ?? null; // Todo: Validate.
-  const id = req.signedCookies["u"];
+  const id = UserCookie.getUserId(req);
+
+  if (!id) {
+    res.sendStatus(401);
+    return;
+  }
 
   // Handle already subscribed users. Compare subs if it is new subscription.
   const sub = await UsersRepository.setUserSubscription(id, subscription);
@@ -22,7 +28,12 @@ export const subscribe = async (req: Request, res: Response) => {
 };
 
 export const unsubscribe = async (req: Request, res: Response) => {
-  const id = req.signedCookies["u"];
+  const id = UserCookie.getUserId(req);
+
+  if (!id) {
+    res.sendStatus(401);
+    return;
+  }
 
   await UsersRepository.setUserSubscription(id, null);
 
@@ -35,7 +46,12 @@ export const unsubscribe = async (req: Request, res: Response) => {
 // (Generating multiple API keys? + Application Cache?)
 export const broadcast = async (req: Request, res: Response) => {
   const message = req.body.message;
-  const id = req.signedCookies["u"];
+  const id = UserCookie.getUserId(req);
+
+  if (!id) {
+    res.sendStatus(401);
+    return;
+  }
 
   const payload = JSON.stringify({ title: message });
 
