@@ -22,6 +22,7 @@ export const createServer = (cookieSecret: string) => {
           "http://localhost:3000",
           "http://localhost:5173",
           "https://frog02-30476.wykr.es",
+          "https://webpusher-client.vercel.app",
         ];
 
         return callback(null, allowList.includes(origin));
