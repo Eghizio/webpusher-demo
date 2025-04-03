@@ -7,6 +7,7 @@ const COOKIE_OPTIONS: CookieOptions = {
   sameSite: "none",
   maxAge: YEAR,
   signed: true,
+  secure: true,
 } as const;
 
 export class UserCookie {
