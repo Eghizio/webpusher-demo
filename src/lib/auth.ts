@@ -4,7 +4,7 @@ const COOKIE_NAME = "u";
 const YEAR = 365 * 24 * 60 * 60 * 1_000; // Cookie expiration in milliseconds.
 const COOKIE_OPTIONS: CookieOptions = {
   httpOnly: true,
-  sameSite: "lax",
+  sameSite: "none",
   maxAge: YEAR,
   signed: true,
 } as const;
